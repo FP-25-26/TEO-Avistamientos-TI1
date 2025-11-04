@@ -20,7 +20,7 @@ def lee_avistamientos(fichero:str)->list[Avistamiento]:
     '''
     Lee un fichero de entrada y devuelve una lista de tuplas. 
     Para convertir la cadena con la fecha y la hora al tipo datetime, usar
-        datetime.strptime(fecha_hora,'%d/%m/%Y %H:%M')    
+        datetime.strptime(fecha_hora,'%m/%d/%Y %H:%M')    
     
     :param fichero: ruta del fichero csv que contiene los datos en codificación utf-8 
     :return: lista de tuplas con la información de los avistamientos 
