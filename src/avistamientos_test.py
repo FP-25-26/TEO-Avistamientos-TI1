@@ -1,9 +1,7 @@
-from re import A
 import avistamientos as av
 from avistamientos import Avistamiento
-from datetime import datetime
+from datetime import datetime, date
 from coordenadas import *
-import locale
 from typing import Iterable, TypeVar
 
 K = TypeVar('K')
@@ -24,7 +22,7 @@ def mostrar_diccionario2(dicc:dict[K,V])->None:
         print(f"\t{clave}: {valor}")
 
 def test_lee_avistamientos(avistamientos:list[Avistamiento])->None:
-    print(f"Se han leido {len(avistamientos)}  avistamientos")
+    print(f"Se han leido {len(avistamientos)} avistamientos.")
     print("Los cinco avistamientos primeros son: ")
     mostrar_iterable_enumerado(avistamientos [:5])
     print("Los cinco avistamientos últimos son: ")
@@ -62,7 +60,7 @@ def test_avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], c
              las coordenadas {coordenadas.latitud}, {coordenadas.longitud}: {duracion}")
     print(f"Comentario: {comentario}")
 
-def test_avistamientos_fechas(avistamientos:list[Avistamiento], fecha_inicial:datetime.date|None=None, fecha_final:datetime.date|None=None)->None:
+def test_avistamientos_fechas(avistamientos:list[Avistamiento], fecha_inicial:date|None=None, fecha_final:date|None=None)->None:
     avistamientos_fec = av.avistamientos_fechas(avistamientos, \
                                          fecha_inicial, fecha_final)
     print(msg_avistamientos_fecha(fecha_inicial, fecha_final))     
@@ -70,7 +68,7 @@ def test_avistamientos_fechas(avistamientos:list[Avistamiento], fecha_inicial:da
     print(f"Total avistamientos {len(avistamientos_fec)}")                                
   
 ### Función auxliar para generar un mensaje personalizado                
-def msg_avistamientos_fecha(fecha_inicial:datetime.date|None=None, fecha_final:datetime.date|None=None)->str:    
+def msg_avistamientos_fecha(fecha_inicial:date|None=None, fecha_final:date|None=None)->str:    
     if fecha_inicial == None and fecha_final == None:
         msg = "Mostrando todos los avistamientos"
     elif fecha_inicial== None:
@@ -161,47 +159,39 @@ def test_avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])-
     print("Mostrando la fecha del último avistamiento por estado")
     mostrar_diccionario2(indice)
 
-def main():
-    # Establecemos la configuración local de la hora al formato
-    # que esté definido en el ordenador del usuario
-    locale.setlocale(locale.LC_TIME, '')
-
-    avistamientos = av.lee_avistamientos("data/ovnis.csv")
-    test_lee_avistamientos (avistamientos)
-
-    ### 2.1 ##########################################################
+def test_ej2_1(avistamientos:list[Avistamiento])->None:
     print("2.1" , "#"*70)
     fecha = datetime(2005, 5, 1).date()
     test_numero_avistamientos_fecha(avistamientos, fecha)
 
-
-    ### 2.2 ##########################################################
+def test_ej2_2(avistamientos:list[Avistamiento])->None:
     print("2.2" , "#"*70)
     conjunto_estados = {'in', 'nm', 'pa', 'wa'}
     test_formas_estados(avistamientos, conjunto_estados)
 
-    ### 2.3 ##########################################################
+def test_ej2_3(avistamientos:list[Avistamiento])->None:
     print("2.3" , "#"*70)
+    conjunto_estados = {'in', 'nm', 'pa', 'wa'}
     for estado in conjunto_estados:
         test_duracion_total(avistamientos, estado)
 
-    ### 2.4 ##########################################################
+def test_ej2_4(avistamientos:list[Avistamiento])->None:
     print("2.4" , "#"*70)
     coordenadas = Coordenadas(40.1933333,-85.3863889)
     radio = 0.1        
     test_avistamientos_cercanos_ubicacion(avistamientos,coordenadas, radio)
 
-    ### 3.1 ##########################################################
+def test_ej3_1(avistamientos:list[Avistamiento])->None:
     print("3.1" , "#"*70)
     forma = 'circle'
     test_avistamiento_mayor_duracion(avistamientos, forma)
 
-    ### 3.2 ##########################################################
+def test_ej3_2(avistamientos:list[Avistamiento])->None:
     print("3.2" , "#"*70)
     coordenadas = Coordenadas(40.1933333,-85.3863889)
     test_avistamiento_cercano_mayor_duracion(avistamientos, coordenadas)
 
-    ### 3.3 ##########################################################
+def test_ej3_3(avistamientos:list[Avistamiento])->None:
     print("3.3" , "#"*70)
     f1 =  datetime(2005,5,1).date()
     f2 = datetime(2005,5,1).date()
@@ -209,66 +199,93 @@ def main():
     test_avistamientos_fechas(avistamientos,  fecha_final=f1)
     test_avistamientos_fechas(avistamientos,  fecha_inicial=f1)
 
-    ### 3.4 ##########################################################
+def test_ej3_4(avistamientos:list[Avistamiento])->None:
     print("3.4" , "#"*70)
     test_comentario_mas_largo(avistamientos, 2005, "ufo")
-    
-    ### 3.5 ##########################################################
+
+def test_ej3_5(avistamientos:list[Avistamiento])->None:
     print("3.5" , "#"*70)
     test_media_dias_entre_avistamientos(avistamientos)
     test_media_dias_entre_avistamientos(avistamientos, 1979)
 
-    ### 4.1 ##########################################################
+def test_ej4_1(avistamientos:list[Avistamiento])->None:
     print("4.1" , "#"*70)
     test_avistamientos_por_fecha(avistamientos)
 
-    ### 4.2 ##########################################################
+def test_ej4_2(avistamientos:list[Avistamiento])->None:
     print("4.2" , "#"*70)
     test_formas_por_mes(avistamientos)
 
-    ### 4.3 ##########################################################
+def test_ej4_3(avistamientos:list[Avistamiento])->None:
     print("4.3" , "#"*70)
     test_numero_avistamientos_por_año(avistamientos)
 
-    ### 4.4 ##########################################################
+def test_ej4_4(avistamientos:list[Avistamiento])->None:
     print("4.4" , "#"*70)
     test_num_avistamientos_por_mes(avistamientos)
 
-    ### 4.5 ##########################################################
+def test_ej4_5(avistamientos:list[Avistamiento])->None:
     print("4.5" , "#"*70)
     test_coordenadas_mas_avistamientos(avistamientos)
 
-    ### 4.6 ##########################################################
+def test_ej4_6(avistamientos:list[Avistamiento])->None:
     print("4.6" , "#"*70)
     test_hora_mas_avistamientos(avistamientos)
 
-    ### 4.7 ##########################################################
+def test_ej4_7(avistamientos:list[Avistamiento])->None:
     print("4.7" , "#"*70)
     test_longitud_media_comentarios_por_estado(avistamientos)
 
-    ### 4.8 ##########################################################
+def test_ej4_8(avistamientos:list[Avistamiento])->None:
     print("4.8" , "#"*70)
     test_porc_avistamientos_por_forma(avistamientos)
 
-    ### 4.9 ##########################################################
+def test_ej4_9(avistamientos:list[Avistamiento])->None:
     print("4.9" , "#"*70)
     test_avistamientos_mayor_duracion_por_estado(avistamientos)
 
-    ### 4.10 ##########################################################
+def test_ej4_10(avistamientos:list[Avistamiento])->None:
     print("4.10" , "#"*70)
     test_año_mas_avistamientos_forma(avistamientos, 'circle')
 
-    ### 4.11 ##########################################################
+def test_ej4_11(avistamientos:list[Avistamiento])->None:
     print("4.11" , "#"*70)
     test_estados_mas_avistamientos(avistamientos)
 
-    ### 4.12 ##########################################################
+def test_ej4_12(avistamientos:list[Avistamiento])->None:
     print("4.12" , "#"*70)
     test_duracion_total_avistamientos_año(avistamientos, 'ca')
 
-    ### 4.13 ##########################################################
+def test_ej4_13(avistamientos:list[Avistamiento])->None:
     print("4.13" , "#"*70)
     test_avistamiento_mas_reciente_por_estado(avistamientos)
+
+def main():
+    avistamientos = av.lee_avistamientos("data/ovnis.csv")
+    test_lee_avistamientos(avistamientos)
+
+    test_ej2_1(avistamientos)
+    # test_ej2_2(avistamientos)
+    # test_ej2_3(avistamientos)
+    # test_ej2_4(avistamientos)
+    # test_ej3_1(avistamientos)
+    # test_ej3_2(avistamientos)
+    # test_ej3_3(avistamientos)
+    # test_ej3_4(avistamientos)
+    # test_ej3_5(avistamientos)
+    # test_ej4_1(avistamientos)
+    # test_ej4_2(avistamientos)
+    # test_ej4_3(avistamientos)
+    # test_ej4_4(avistamientos)
+    # test_ej4_5(avistamientos)
+    # test_ej4_6(avistamientos)
+    # test_ej4_7(avistamientos)
+    # test_ej4_8(avistamientos)
+    # test_ej4_9(avistamientos)
+    # test_ej4_10(avistamientos)
+    # test_ej4_11(avistamientos)
+    # test_ej4_12(avistamientos)
+    # test_ej4_13(avistamientos)
 
 if __name__=="__main__":
     main()

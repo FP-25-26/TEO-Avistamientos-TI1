@@ -1,16 +1,6 @@
-'''
-Módulo avistamientos
-Adaptación del notebook a proyecto: Toñi Reina
-'''
-import csv
-from datetime import datetime
-import math
+from datetime import datetime, date
 from typing import NamedTuple
-from collections import Counter, defaultdict
-from coordenadas import Coordenadas, distancia_haversine, redondear
-from parsers import parse_datetime
-import statistics
-import locale
+from coordenadas import Coordenadas
 
 ## Definición de tipos
 Avistamiento = NamedTuple('Avistamiento', [
@@ -38,7 +28,7 @@ def lee_avistamientos(fichero:str)->list[Avistamiento]:
     pass
 
 ### 2.1 Número de avistamientos producidos en una fecha
-def numero_avistamientos_fecha(avistamientos: list[Avistamiento], fecha: datetime.date)->int:
+def numero_avistamientos_fecha(avistamientos: list[Avistamiento], fecha: date)->int:
     ''' Avistamientos que se han producido en una fecha
     
     Toma como entrada una lista de avistamientos y una fecha.
@@ -48,13 +38,7 @@ def numero_avistamientos_fecha(avistamientos: list[Avistamiento], fecha: datetim
     :param fecha: fecha del avistamiento 
     :return:  Número de avistamientos producidos en la fecha 
     '''
-    # Implementación con bucles
     pass    
-
-
-# Por comprensión
-def numero_avistamientos_fecha2(avistamientos: list[Avistamiento], fecha: datetime.date)->int:
-    pass
 
 ### 2.2 Número de formas observadas en un conjunto de estados
 def formas_estados(avistamientos:list[Avistamiento], estados:set[str])->int:
@@ -65,11 +49,6 @@ def formas_estados(avistamientos:list[Avistamiento], estados:set[str])->int:
     :param estados: conjunto de estados para los que se quiere hacer el cálculo 
     :return: Número de formas distintas observadas en los avistamientos producidos en alguno de los estados indicados por el parámetro "estados"
     '''
-    #Implementación con bucles
-    pass
-
-def formas_estados2(avistamientos:list[Avistamiento], estados:set[str])->int:
-    # Por comprensión
     pass
     
 
@@ -82,11 +61,6 @@ def duracion_total(avistamientos:list[Avistamiento], estado:str)->int:
     :param estado: estado para el que se quiere hacer el cálculo
     :return: duración total en segundos de todos los avistamientos del estado 
     '''
-    # Implementación con bucles
-    pass
-
-## Por compresión
-def duracion_total2(avistamientos:list[Avistamiento], estado:str)->int:
     pass
 
 
@@ -102,9 +76,6 @@ def avistamientos_cercanos_ubicacion(avistamientos:list[Avistamiento], ubicacion
     '''
     pass
 
-def avistamientos_cercanos_ubicacion2(avistamientos:list[Avistamiento], ubicacion:Coordenadas, radio:float)->set[Avistamiento]:
-    pass
-
 
 ## Operaciones con máximos y mínimos
 ### 3.1 Avistamiento de una forma con mayor duración
@@ -116,12 +87,8 @@ def avistamiento_mayor_duracion(avistamientos: list[Avistamiento], forma:str)->A
     :param forma: forma del avistamiento 
     :return:  avistamiento más largo de la forma dada
     '''
-    #Implementación con bucles
     pass
 
-def avistamiento_mayor_duracion2(avistamientos: list[Avistamiento], forma:str)->Avistamiento:
-    # Por comprension
-    pass
 
 ### 3.2 Avistamiento cercano a un punto con mayor duración
 def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], coordenadas:Coordenadas, radio:float=0.5)->tuple[int, str]:
@@ -136,18 +103,12 @@ def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], coorde
     :param radio: radio de búsqueda
     :return: duración y comentarios del avistamiento más largo en el entorno de las coordenadas comentarios del avistamiento más largo
     '''
-    #Con bucles
     pass
 
 
-def avistamiento_cercano_mayor_duracion2(avistamientos:list[Avistamiento], coordenadas:Coordenadas, radio:float=0.5)->tuple[int, str]:
-    # Por comprensión
-   pass
-    
-
 ### 3.3 Avistamientos producidos entre dos fechas
 
-def avistamientos_fechas(avistamientos:list[Avistamiento], fecha_inicial:datetime.date|None=None, fecha_final:datetime.date|None=None)->list[Avistamiento]:
+def avistamientos_fechas(avistamientos:list[Avistamiento], fecha_inicial:date|None=None, fecha_final:date|None=None)->list[Avistamiento]:
     '''
     Devuelve una lista con los avistamientos que han tenido lugar
     entre fecha_inicial y fecha_final (ambas inclusive). La lista devuelta
@@ -167,17 +128,6 @@ def avistamientos_fechas(avistamientos:list[Avistamiento], fecha_inicial:datetim
     :param fecha_final: fecha hasta la cual se devuelven los avistamientos
     :return: lista de tuplas con la información de los avistamientos en el rango de fechas
     '''
-    # Solución 1: usando datetime.min/max
-    pass
-
-def avistamientos_fechas2(avistamientos:list[Avistamiento], fecha_inicial:datetime.date|None=None, fecha_final:datetime.date|None=None)->list[Avistamiento]:
-    # Solución 2: usando una función auxiliar:
-    pass
-
-def fecha_en_rango(fecha:datetime, fecha_inicial:datetime|None=None, fecha_final:datetime|None=None )-> bool:
-    pass
-
-def fecha_en_rango2(fecha:datetime, fecha_inicial:datetime|None=None, fecha_final:datetime|None=None )-> bool:
     pass
 
 
@@ -193,13 +143,8 @@ def comentario_mas_largo(avistamientos:list[Avistamiento], anyo:int, palabra:str
     :param palabra: palabra que debe incluir el comentario del avistamiento buscado 
     :return: avistamiento con el comentario más largo
     '''    
-    # Con bucles
     pass
     
-def comentario_mas_largo2(avistamientos:list[Avistamiento], anyo:int, palabra:str)->Avistamiento:
-    # Por comprensión
-    pass 
-
 
 ### 3.5 Media de días entre avistamientos consecutivos
 def media_dias_entre_avistamientos(avistamientos:list[Avistamiento], anyo:int|None=None)->float|None:
@@ -214,22 +159,11 @@ def media_dias_entre_avistamientos(avistamientos:list[Avistamiento], anyo:int|No
     '''    
     pass
 
-def dias_entre_fechas(fechas:list[datetime])->list[int]:
-    pass
-
-def dias_entre_fechas2(fechas:list[datetime])->list[int]:
-    pass
-
-def dias_entre_fechas3(fechas:list[datetime])->list[int]:
-    pass
-
-def dias_entre_fechas4(fechas:list[datetime])->list[int]:
-    pass
 
 ## 4 Operaciones con diccionarios
 
 ### 4.1 Avistamientos por fecha
-def avistamientos_por_fecha(avistamientos:list[Avistamiento])->dict[datetime.date, list[Avistamiento]]:
+def avistamientos_por_fecha(avistamientos:list[Avistamiento])->dict[date, list[Avistamiento]]:
     ''' 
     Devuelve un diccionario que indexa los avistamientos por fechas
     
@@ -237,12 +171,8 @@ def avistamientos_por_fecha(avistamientos:list[Avistamiento])->dict[datetime.dat
     :return diccionario en el que las claves son las fechas de los avistamientos 
          y los valores son conjuntos con los avistamientos observados en esa fecha
     '''
-    # Con dict
     pass
 
-def avistamientos_por_fecha2(avistamientos:list[Avistamiento])->dict[datetime.date, list[Avistamiento]]:
-    # Con defaultdict
-    pass
 
 ### 4.2 Formas de avistamientos por mes
 def formas_por_mes(avistamientos:list[Avistamiento])->dict[str, set[str]]:
@@ -256,23 +186,6 @@ def formas_por_mes(avistamientos:list[Avistamiento])->dict[str, set[str]]:
     :return: diccionario en el que las claves son los nombres de los meses 
          y los valores son conjuntos con las formas observadas en cada mes
     '''
-    # Establecemos la configuración local de la hora al formato
-    # que esté definido en el ordenador del usuario
-    locale.setlocale(locale.LC_TIME, '')
-
-    # Con dict
-    pass
-
-    
-def formas_por_mes_1b(avistamientos:list[Avistamiento])->dict[str,set[str]]:
-    # Con dict y sin usar la configuración local
-    pass
-
-def formas_por_mes2(avistamientos:list[Avistamiento])->dict[str,set[str]]:
-    # Con defaultdict    
-    # Establecemos la configuración local de la hora al formato
-    # que esté definido en el ordenador del usuario
-    locale.setlocale(locale.LC_TIME, '')
     pass
 
 ### 4.3 Número de avistamientos por año
@@ -284,15 +197,6 @@ def numero_avistamientos_por_año(avistamientos:list[Avistamiento])->dict[int, i
     :return: diccionario en el que las claves son los años
          y los valores son el número de avistamientos observados en ese año
     '''
-    # Con dict
-    pass
-
-def numero_avistamientos_por_año2(avistamientos:list[Avistamiento])->dict[int, int]:
-    # Con Counter
-    pass
-
-def numero_avistamientos_por_año3(avistamientos:list[Avistamiento])->dict[int, int]:
-    # Con defaultdict
     pass
 
 ### 4.4 Número de avistamientos por mes del año
@@ -306,26 +210,7 @@ def num_avistamientos_por_mes(avistamientos:list[Avistamiento])->dict[int, int]:
     :return:diccionario en el que las claves son los nombres de los meses y 
          los valores son el número de avistamientos observados en ese mes
     '''
-    # Con dict
-    # Establecemos la configuración local de la hora al formato
-    # que esté definido en el ordenador del usuario
-    locale.setlocale(locale.LC_TIME, '')
     pass
-
-def num_avistamientos_por_mes2(avistamientos:list[Avistamiento])->dict[int, int]:
-    # Con Counter
-    # Establecemos la configuración local de la hora al formato
-    # que esté definido en el ordenador del usuario
-    locale.setlocale(locale.LC_TIME, '')
-
-    pass
-
-def num_avistamientos_por_mes3(avistamientos:list[Avistamiento])->dict[int, int]:
-    # Con defaultdict
-    # Establecemos la configuración local de la hora al formato
-    # que esté definido en el ordenador del usuario
-    locale.setlocale(locale.LC_TIME, '')
-    pass        
 
 ### 4.5 Coordenadas con mayor número de avistamientos
 def coordenadas_mas_avistamientos(avistamientos:list[Avistamiento])->Coordenadas:
@@ -335,21 +220,7 @@ def coordenadas_mas_avistamientos(avistamientos:list[Avistamiento])->Coordenadas
     
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :return: Coordenadas (sin decimales) que acumulan más avistamientos
-
-    En primer lugar construiremos un diccionario cuyas claves sean las coordenadas 
-    enteras obtenidas a partir de las coordenadas de los avistamientos, y
-    cuyos valores sean el número de avistamientos observados en esas coordenadas.
-    Después obtendremos el máximo de los elementos del diccionario según el valor
-    del elemento.
     '''
-    pass
-
-def coordenadas_mas_avistamientos2(avistamientos:list[Avistamiento])->Coordenadas:
-    #Alternativa con Counter
-    pass
-
-def coordenadas_mas_avistamientos3(avistamientos:list[Avistamiento])->Coordenadas:
-    #Con defaultdict e items para el cálculo del max
     pass
 
 ### 4.6 Hora del día con mayor número de avistamientos
@@ -359,19 +230,9 @@ def hora_mas_avistamientos(avistamientos:list[Avistamiento])->int:
     
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :return: hora del día en la que se producen más avistamientos
-       
-    En primer lugar construiremos un diccionario cuyas claves sean las horas del
-    día en las que se han observado avistamientos, y cuyos valores sean el número
-    de avistamientos observados en esa hora.
-    Después obtendremos el máximo de los elementos del diccionario según el valor
-    del elemento.
+      
     '''
     pass
-
-def hora_mas_avistamientos2(avistamientos:list[Avistamiento])->int:
-    # Alternativa usando Counter
-    pass
-
 
 ### 4.7 Longitud media de los comentarios por estado
 def longitud_media_comentarios_por_estado(avistamientos:list[Avistamiento])->dict[str,float]:
@@ -382,39 +243,8 @@ def longitud_media_comentarios_por_estado(avistamientos:list[Avistamiento])->dic
     
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :return: diccionario que almacena la longitud media de los comentarios (valores) por estado (claves)
-            
-    En primer lugar creamos un diccionario que agrupe los avistamientos por estado.
-    Esto lo hacemos usando una función auxiliar.
-    En segundo lugar, creamos un diccionario a partir del primero, en el que se
-    calcule la media. Para definir este diccionario usamos una función
-    auxiliar que calcule la media de una lista de Avistamientos
     '''
     pass 
-
-def agrupa_avistamientos_por_estado(avistamientos:list[Avistamiento])->dict[str,list[Avistamiento]]:
-    '''Devuelve un diccionario en el que las claves son los estados, 
-    y los valores listas de avistamientos de ese estado
-
-    :param avistamientos: lista de tuplas con la información de los avistamientos 
-    :return: Un diccionario con estados y listas de avistamientos de ese estado
-    '''
-    pass
-
-def agrupa_avistamientos_por_estado2(avistamientos:list[Avistamiento])->dict[str,list[Avistamiento]]:
-    #con defaultdict
-    pass
-
-def longitud_media_comentarios(avistamientos:list[Avistamiento])->dict[str,float]:
-    '''Dada una lista de avistamientos, devuelve la longitud media de los
-    comentarios de esa lista
-
-    :param avistamientos: lista de tuplas con la información de los avistamientos 
-    :return: La longitud media de los comentarios de la lista
-    '''
-    pass
-
-def longitud_media_comentarios2(avistamientos:list[Avistamiento])->dict[str,float]:
-    pass
 
 ### 4.8 Porcentaje de avistamientos por forma
 def porc_avistamientos_por_forma(avistamientos:list[Avistamiento])->dict[str,float]:  
@@ -425,17 +255,7 @@ def porc_avistamientos_por_forma(avistamientos:list[Avistamiento])->dict[str,flo
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :return:  diccionario que almacena los porcentajes de avistamientos (valores)
          por forma (claves)
-            
-    En primer lugar crearemos un diccionario cuyas claves sean las formas
-    y cuyos valores sean el número de avistamientos de esa forma.
-    Después crearemos un segundo diccionario con las mismas claves y cuyos valores
-    resulten de dividir los valores del diccionario anterior por el número
-    total de avistamientos, para obtener los porcentajes.
     '''  
-    pass
-
-def porc_avistamientos_por_forma2(avistamientos:list[Avistamiento])->dict[str,float]:
-    # Solución alternativa con Counter
     pass
 
 ### 4.9 Avistamientos de mayor duración por estado
@@ -447,19 +267,7 @@ def avistamientos_mayor_duracion_por_estado(avistamientos:list[Avistamiento], n:
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :param n: número de avistamientos a almacenar por cada estado 
     :return: diccionario en el que las claves son los estados y los valores son listas con los "n" avistamientos de mayor duración de cada estado, ordenados de mayor a menor duración
-            
-    En primer lugar crearemos un diccionario de agrupación cuyas claves sean los estados
-    y cuyos valores sean listas con los avistamientos observados en ese estado.
-    Para ello usamos la función auxiliar que definimos en el apartado 4.7.
-    Después crearemos un segundo diccionario cuyas claves sean los estados
-    y cuyos valores sean las mismas listas, pero en orden de mayor a menor
-    duración y recortadas a "n" elementos.
     '''
-    #con bucles
-    pass
-
-def avistamientos_mayor_duracion_por_estado2(avistamientos:list[Avistamiento], n:int=3)->dict[str,Avistamiento]
-    # Usando una definición por compresión
     pass
 
 ### 4.10 Año con más avistamientos de una forma
@@ -471,18 +279,9 @@ def año_mas_avistamientos_forma(avistamientos:list[Avistamiento], forma:str)->i
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :param forma: forma del avistamiento 
     :return: año con mayor número de avistamientos de la forma dada
-         
-    En primer lugar se crea un diccionario con filtro cuyas claves sean los años
-    y cuyos valores sean el número de avistamientos observados en ese año,
-    utilizando la función ya definida numero_avistamientos_por_año.
-    Luego, se calcula el máximo del diccionario según los valores.
     '''
-    ## Con dict
     pass
 
-def año_mas_avistamientos_forma2(avistamientos:list[Avistamiento], forma:str)->int:
-    # con Counter
-    pass
 
 ### 4.11 Estados con mayor número de avistamientos
 def estados_mas_avistamientos(avistamientos:list[Avistamiento], n:int=5)->list[tuple[str,int]]:
@@ -497,19 +296,9 @@ def estados_mas_avistamientos(avistamientos:list[Avistamiento], n:int=5)->list[t
     :return: lista con los estados donde se han observado más avistamientos,
          junto con el número de avistamientos, en orden decreciente
          del número de avistamientos y con un máximo de "limite" estados.
-           
-    En primer lugar crearemos un diccionario cuyas claves sean los estados
-    y cuyos valores sean el número de avistamientos observados en ese estado.
-    Después crearemos una lista con las claves del diccionario, ordenadas según
-    sus respectivos valores en orden decreciente. Finalmente, recortaremos
-    esta lista a "limite" elementos.
     '''
     pass  
 
-def estados_mas_avistamientos2(avistamientos:list[Avistamiento], n:int=5)->list[tuple[str,int]]:
-    #Con Counter
-    pass
-      
 ### 4.12 Duración total de los avistamientos de cada año en un estado dado
 def duracion_total_avistamientos_año(avistamientos:list[Avistamiento], estado:str)-> dict[int, int]:
     '''
@@ -519,17 +308,11 @@ def duracion_total_avistamientos_año(avistamientos:list[Avistamiento], estado:s
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :param estado: nombre del estado
     :return: diccionario en el que las claves son los años y los valores son números con la suma de las duraciones de los avistamientos observados ese año en el estado dado.
-    Se crea un diccionario con filtro cuyas claves sean los años
-    y cuyos valores sean la suma de las duraciones de todos los avistamientos
-    observados en ese año.
     '''
     pass
 
-def duracion_total_avistamientos_año2(avistamientos:list[Avistamiento], estado:str)-> dict[int, int]:
-    pass
-
 ### 4.13 Fecha del avistamiento más reciente de cada estado
-def avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])->dict[str, datetime.datetime]:
+def avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])->dict[str, datetime]:
     '''
     Devuelve un diccionario que almacena la fecha del último avistamiento
     observado en cada estado.
@@ -537,11 +320,5 @@ def avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])->dict
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :return:  diccionario en el que las claves son los estados y los valores son 
          las fechas del último avistamientos observado en ese estado.
-            
-    En primer lugar crearemos un diccionario cuyas claves sean los estados
-    y cuyos valores sean listas con los avistamientos observados en ese estado.
-    Para ello usamos la función auxiliar  definida en el apartado 4.7
-    Después crearemos un segundo diccionario cuyas claves sean los estados y
-    cuyos valores sean los valores máximos de las listas, según el campo fechahora.
     '''
     pass
