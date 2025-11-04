@@ -145,15 +145,12 @@ Función que devuelve una lista con los avistamientos observados entre una fecha
 
 El resultado del test debe ser:
 ```
-    Mostrando los avistamientos entre el 1 de mayo de 2005 y el 1 de mayo de 2005: 
-    	 Avistamiento(fechahora=datetime.datetime(2005, 5, 1, 23, 0), ciudad='palmdale', estado='ca', forma='sphere', duracion=300, comentarios='dancing light above lancaster', ubicacion=Coordenadas(latitud=34.5794444, longitud=-118.1155556))
-    	 Avistamiento(fechahora=datetime.datetime(2005, 5, 1, 16, 11), ciudad='fallbrook', estado='ca', forma='changing', duracion=30, comentarios='Huge bright liigt', ubicacion=Coordenadas(latitud=33.3763889, longitud=-117.2502778))
-    	 Avistamiento(fechahora=datetime.datetime(2005, 5, 1, 6, 20), ciudad='independence', estado='ky', forma='other', duracion=300, comentarios='stationary disk-like object seen near I-75/Independence  KY', ubicacion=Coordenadas(latitud=38.9430556, longitud=-84.5441667))
-    	 Avistamiento(fechahora=datetime.datetime(2005, 5, 1, 1, 0), ciudad='portland', estado='or', forma='oval', duracion=420, comentarios='Three amber/orange objects patrol Portland skyline', ubicacion=Coordenadas(latitud=45.5236111, longitud=-122.675))
-    	 Avistamiento(fechahora=datetime.datetime(2005, 5, 1, 1, 0), ciudad='portland', estado='or', forma='disk', duracion=300, comentarios='Orange disk-like orbs over Downtown Portland.  ((NUFORC Note:  Student report.  PD))', ubicacion=Coordenadas(latitud=45.5236111, longitud=-122.675))
-    	Total: 5 avistamientos.
-    Avistamientos hasta el 1 de mayo de 2005: 12639 avistamientos
-    Avistamientos desde el 1 de mayo de 2005: 19048 avistamientos
+Mostrando los avistamientos entre el 1 de May de 2005 y el 1 de May de 2005:
+Total avistamientos 5
+Mostrando los avistamientos anteriores al 1 de May de 2005: 
+Total avistamientos 12639
+Mostrando los avistamientos posteriores al 1 de May de 2005:
+Total avistamientos 19048
 ```    
 
 ### 3.4 Avistamiento de un año con el comentario más largo
@@ -162,7 +159,7 @@ Función que devuelve el avistamiento con el comentario más largo, de entre tod
 
 El resultado del test debe ser:
 ```
-    El avistamiento con el comentario más largo de 2015 incluyendo la palabra "ufo" es:
+    El avistamiento con el comentario más largo de 2005 incluyendo la palabra "ufo" es:
     Avistamiento(fechahora=datetime.datetime(2005, 6, 15, 12, 0), ciudad='fort myers', estado='fl', forma='disk', duracion=1200, comentarios="hey all you ufo peeps i am only writing this to verify another guys sighting here in swf there here alot ufo's and there disturbing the", ubicacion=Coordenadas(latitud=26.6402778, longitud=-81.8725))
 ```    
 
@@ -184,9 +181,13 @@ Función que crea un diccionario que relaciona las fechas con los avistamientos 
 
 El resultado del test debe ser:
 ```
-    Avistamientos por fecha (se muestran solo dos fechas):
-    	1986-09-18: {Avistamiento(fechahora=datetime.datetime(1986, 9, 18, 16, 0), ciudad='owensboro', estado='ky', forma='cylinder', duracion=180, comentarios='Baton-shaped object moving end-over-end in clear afternoon sky.', ubicacion=Coordenadas(latitud=37.7741667, longitud=-87.1133333))}
-    	1986-07-20: {Avistamiento(fechahora=datetime.datetime(1986, 7, 20, 3, 30), ciudad='san marcos', estado='tx', forma='rectangle', duracion=600, comentarios='Was looking at all kinds of sites that came up on the Yahoo web site.  It talked about how people are looking at UFO sites.  It reminde', ubicacion=Coordenadas(latitud=29.8830556, longitud=-97.9411111)), Avistamiento(fechahora=datetime.datetime(1986, 7, 20, 23, 30), ciudad='new haven', estado='ct', forma='triangle', duracion=600, comentarios='Black Triangle spotted in CT back in mid-eighties', ubicacion=Coordenadas(latitud=41.3080556, longitud=-72.9286111)), Avistamiento(fechahora=datetime.datetime(1986, 7, 20, 1, 0), ciudad='tucson', estado='az', forma='light', duracion=900, comentarios='Lights and beems over AZ desert', ubicacion=Coordenadas(latitud=32.2216667, longitud=-110.9258333))}
+Avistamientos por fecha (mostrando fechas específicas):
+1986-09-18 ==>
+        1-Avistamiento(fechahora=datetime.datetime(1986, 9, 18, 16, 0), ciudad='owensboro', estado='ky', forma='cylinder', duracion=180, comentarios='Baton-shaped object moving end-over-end in clear afternoon sky.', ubicacion=Coordenadas(latitud=37.7741667, longitud=-87.1133333))
+1986-07-20 ==>
+        1-Avistamiento(fechahora=datetime.datetime(1986, 7, 20, 23, 30), ciudad='new haven', estado='ct', forma='triangle', duracion=600, comentarios='Black Triangle spotted in CT back in mid-eighties', ubicacion=Coordenadas(latitud=41.3080556, longitud=-72.9286111))
+        2-Avistamiento(fechahora=datetime.datetime(1986, 7, 20, 1, 0), ciudad='tucson', estado='az', forma='light', duracion=900, comentarios='Lights and beems over AZ desert', ubicacion=Coordenadas(latitud=32.2216667, longitud=-110.9258333))
+        3-Avistamiento(fechahora=datetime.datetime(1986, 7, 20, 3, 30), ciudad='san marcos', estado='tx', forma='rectangle', duracion=600, comentarios='Was looking at all kinds of sites that came up on the Yahoo web site.  It talked about how people are looking at UFO sites.  It reminde', ubicacion=Coordenadas(latitud=29.8830556, longitud=-97.9411111))
 ```    
 
 ### 4.2 Formas de avistamientos por mes
@@ -195,10 +196,18 @@ Función que devuelve un diccionario que indexa las distintas formas de avistami
 
 El resultado del test debe ser:
 ```
-    Índice de formas por mes (se muestran las formas para enero, julio y noviembre:
-    	Enero (21 formas distintas): changing, chevron, cigar, circle, cone, cross, cylinder, diamond, disk, egg, fireball, flash, formation, light, other, oval, rectangle, sphere, teardrop, triangle, unknown
-    	Julio (22 formas distintas): changing, chevron, cigar, circle, cone, cross, cylinder, delta, diamond, disk, egg, fireball, flash, formation, light, other, oval, rectangle, sphere, teardrop, triangle, unknown
-    	Noviembre (23 formas distintas): changing, chevron, cigar, circle, cone, cross, cylinder, delta, diamond, disk, egg, fireball, flash, formation, light, other, oval, rectangle, round, sphere, teardrop, triangle, unknown
+Enero (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Febrero (22 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'delta', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Marzo (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Abril (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Mayo (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Junio (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Julio (22 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'delta', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Agosto (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Septiembre (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Octubre (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
+Noviembre (23 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'delta', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'round', 'sphere', 'teardrop', 'triangle', 'unknown']
+Diciembre (21 formas) ==> ['changing', 'chevron', 'cigar', 'circle', 'cone', 'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash', 'formation', 'light', 'other', 'oval', 'rectangle', 'sphere', 'teardrop', 'triangle', 'unknown']
 ```    
 
 ### 4.3 Número de avistamientos por año
@@ -294,10 +303,19 @@ Función que devuelve el número de avistamientos observados en cada mes del añ
 
 El resultado del test debe ser:
 ```
-    Número de avistamientos por mes (sólo se muestran enero, febrero y marzo):
-    	Enero: 2185
-    	Febrero: 1825
-    	Marzo: 2132
+Número de avistamientos por mes
+        Enero: 2185
+        Febrero: 1825
+        Marzo: 2132
+        Abril: 2126
+        Mayo: 2082
+        Junio: 3129
+        Julio: 3782
+        Agosto: 3336
+        Septiembre: 2989
+        Octubre: 3089
+        Noviembre: 2756
+        Diciembre: 2251
 ```    
 
 ### 4.5 Coordenadas con mayor número de avistamientos
@@ -308,7 +326,7 @@ Implementa antes la función `redondear` en el módulo `coordenadas.py` que reci
 
 El resultado del test debe ser:
 ```
-    Coordenadas enteras de la región en la que se observaron más avistamientos: Coordenadas(latitud=34, longitud=-118)
+Coordenadas redondeadas de la región en la que se observaron más avistamientos: (34.0, -118.0)
 ```    
 
 ### 4.6 Hora del día con mayor número de avistamientos
@@ -317,7 +335,7 @@ Función que devuelve la hora del día (de 0 a 23) en la que se han observado un
 
 El resultado del test debe ser:
 ```
-    Hora en la que se han observado más avistamientos: 21
+Hora en la que se han observado más avistamientos: 21
 ```    
 
 ### 4.7 Longitud media de los comentarios por estado
@@ -331,6 +349,7 @@ El resultado del test debe ser:
     	nm: 79.51461988304094
     	pa: 78.50746268656717
     	wa: 82.73590021691975
+		...
 ```    
 
 ### 4.8 Porcentaje de avistamientos por forma
@@ -339,11 +358,12 @@ Función que devuelve un diccionario en el que las claves son las formas de los 
 
 El resultado del test debe ser:
 ```
-    Porcentajes de avistamientos de las distintas formas (sólo se muestran las formas 'changing', 'chevron', 'cigar' y 'circle'):
+Porcentajes de avistamientos de las distintas formas
     	changing: 2.47%
     	chevron: 1.29%
     	cigar: 2.59%
     	circle: 9.54%
+		...
 ```    
 
 ### 4.9 Avistamientos de mayor duración por estado
@@ -390,10 +410,14 @@ Función que devuelve un diccionario que relaciona cada año con la suma de las 
 
 El resultado del test debe ser:
 ```
-    Mostrando la duración total de los avistamientos entre 2000 y 2002:
-    	Año 2000: 35.257222222222225 horas
-    	Año 2001: 131.24277777777777 horas
-    	Año 2002: 37.96055555555556 horas
+Mostrando la duración total de los avistamientos por año en el estado ca
+        2004: 336497
+        2005: 197987
+        1997: 41973
+        2008: 163570
+        2007: 470490
+        1994: 10533943
+		...
 ```    
 
 ### 4.13 Fecha del avistamiento más reciente de cada estado
@@ -405,7 +429,11 @@ Puedes llamar a la función `agrupa_avistamientos_por_estado` definida anteriorm
 El resultado del test debe ser:
 
 ```
-    Mostrando la fecha del último avistamiento de los estados in' y 'nm':
-    	Fecha del último avistamiento en 'in': 2014-04-12 22:23:00
-    	Fecha del último avistamiento en 'nm': 2014-04-24 08:45:00
+Mostrando la fecha del último avistamiento por estado
+        in: 2014-04-12 22:23:00
+        nm: 2014-04-24 08:45:00
+        pa: 2014-05-01 22:50:00
+        wa: 2014-05-06 21:00:00
+        fl: 2014-05-07 20:30:00
+		...
 ```    

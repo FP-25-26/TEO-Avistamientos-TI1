@@ -98,15 +98,17 @@ def test_media_dias_entre_avistamientos(avistamientos:list[Avistamiento], anyo:i
 
 def test_avistamientos_por_fecha(avistamientos:list[Avistamiento])->None:
     indice = av.avistamientos_por_fecha(avistamientos)
-    print("Avistamientos por fecha  (solo se muestran 3 fechas aleatorias):", )
-    lista = list(indice.items())
-    mini_dict = dict(lista[:3])
+    print("Avistamientos por fecha (mostrando fechas específicas):")
+    fechas_a_mostrar = [date(1986, 9, 18), date(1986, 7, 20)]
+    mini_dict = {fecha: indice[fecha] for fecha in fechas_a_mostrar if fecha in indice}
     mostrar_diccionario(mini_dict)
 
 def test_formas_por_mes(avistamientos:list[Avistamiento])->None:
     indice = av.formas_por_mes(avistamientos)
-    for mes, formas in indice.items():
-        print(f"{mes} ==> {sorted(formas)}")
+    for mes in ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]:
+        formas = indice.get(mes, set())
+        print(f"{mes} ({len(formas)} formas) ==> {sorted(formas)}")
 
 def test_numero_avistamientos_por_año(avistamientos:list[Avistamiento])->None:  
     d = av.numero_avistamientos_por_año(avistamientos)
@@ -265,27 +267,27 @@ def main():
     test_lee_avistamientos(avistamientos)
 
     test_ej2_1(avistamientos)
-    # test_ej2_2(avistamientos)
-    # test_ej2_3(avistamientos)
-    # test_ej2_4(avistamientos)
-    # test_ej3_1(avistamientos)
-    # test_ej3_2(avistamientos)
-    # test_ej3_3(avistamientos)
-    # test_ej3_4(avistamientos)
-    # test_ej3_5(avistamientos)
-    # test_ej4_1(avistamientos)
-    # test_ej4_2(avistamientos)
-    # test_ej4_3(avistamientos)
-    # test_ej4_4(avistamientos)
-    # test_ej4_5(avistamientos)
-    # test_ej4_6(avistamientos)
-    # test_ej4_7(avistamientos)
-    # test_ej4_8(avistamientos)
-    # test_ej4_9(avistamientos)
-    # test_ej4_10(avistamientos)
-    # test_ej4_11(avistamientos)
-    # test_ej4_12(avistamientos)
-    # test_ej4_13(avistamientos)
+    test_ej2_2(avistamientos)
+    test_ej2_3(avistamientos)
+    test_ej2_4(avistamientos)
+    test_ej3_1(avistamientos)
+    test_ej3_2(avistamientos)
+    test_ej3_3(avistamientos)
+    test_ej3_4(avistamientos)
+    test_ej3_5(avistamientos)
+    test_ej4_1(avistamientos)
+    test_ej4_2(avistamientos)
+    test_ej4_3(avistamientos)
+    test_ej4_4(avistamientos)
+    test_ej4_5(avistamientos)
+    test_ej4_6(avistamientos)
+    test_ej4_7(avistamientos)
+    test_ej4_8(avistamientos)
+    test_ej4_9(avistamientos)
+    test_ej4_10(avistamientos)
+    test_ej4_11(avistamientos)
+    test_ej4_12(avistamientos)
+    test_ej4_13(avistamientos)
 
 if __name__=="__main__":
     main()

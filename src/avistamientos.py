@@ -20,7 +20,7 @@ def lee_avistamientos(fichero:str)->list[Avistamiento]:
     '''
     Lee un fichero de entrada y devuelve una lista de tuplas. 
     Para convertir la cadena con la fecha y la hora al tipo datetime, usar
-        datetime.strptime(fecha_hora,'%m/%d/%Y %H:%M')    
+        datetime.strptime(fecha_hora,'%d/%m/%Y %H:%M')    
     
     :param fichero: ruta del fichero csv que contiene los datos en codificación utf-8 
     :return: lista de tuplas con la información de los avistamientos 
@@ -91,9 +91,9 @@ def avistamiento_mayor_duracion(avistamientos: list[Avistamiento], forma:str)->A
 
 
 ### 3.2 Avistamiento cercano a un punto con mayor duración
-def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], coordenadas:Coordenadas, radio:float=0.5)->tuple[int, str]:
+def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], coordenadas:Coordenadas, radio:float=0.5)->tuple[str, int]:
     '''
-    Devuelve la duración y los comentarios del avistamiento que más 
+    Devuelve el comentario y la duración del avistamiento que más 
     tiempo ha durado de aquellos situados en el entorno de las
     coordenadas que se pasan como parámetro de entrada.
     El resultado debe ser una tupla de la forma (duración, comentarios)
@@ -101,7 +101,7 @@ def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], coorde
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :param coordenadas: tupla con latitud y longitud
     :param radio: radio de búsqueda
-    :return: duración y comentarios del avistamiento más largo en el entorno de las coordenadas comentarios del avistamiento más largo
+    :return: comentario y duración del avistamiento más largo en el entorno de las coordenadas 
     '''
     pass
 
