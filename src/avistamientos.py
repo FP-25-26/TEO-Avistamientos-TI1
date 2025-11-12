@@ -145,7 +145,7 @@ def avistamiento_mayor_duracion_2(avistamientos: list[Avistamiento], forma:str)-
     return max(filtrado, key=lambda av:av.duracion)
 
 ### 3.2 Avistamiento cercano a un punto con mayor duración
-def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], coordenadas:Coordenadas, radio:float=0.5)->tuple[str, int]:
+def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], ubicacion:Coordenadas, radio:float=0.5)->tuple[str, int]:
     '''
     Devuelve el comentario y la duración del avistamiento que más 
     tiempo ha durado de aquellos situados en el entorno de las
@@ -158,7 +158,13 @@ def avistamiento_cercano_mayor_duracion(avistamientos:list[Avistamiento], coorde
     :return: comentario y duración del avistamiento más largo en el entorno de las coordenadas 
     '''
     # TODO: Para el próximo miércoles, resolver en casa
-    pass
+    filtrado = []
+    for av in avistamientos:
+        if distancia(ubicacion, av.ubicacion) <= radio:
+            filtrado.append(av)
+    
+    res = max(filtrado, key=lambda av: av.duracion)
+    return (res.comentarios, res.duracion) # Me piden que devuelva esta tupla
 
 
 ### 3.3 Avistamientos producidos entre dos fechas
@@ -183,8 +189,16 @@ def avistamientos_fechas(avistamientos:list[Avistamiento], fecha_inicial:date|No
     :param fecha_final: fecha hasta la cual se devuelven los avistamientos
     :return: lista de tuplas con la información de los avistamientos en el rango de fechas
     '''
-    # TODO: Para el próximo miércoles, resolver en casa
+    res = []
+    for av in avistamientos:
+        if (fecha_inicial == None or fecha_inicial <= av.fechahora.date()) and (fecha_final == None or av.fechahora.date() <= fecha_final):
+            res.append(av)
+    # Como el primer elemento de las tuplas es fechahora, se ordena por ese campo
+    res.sort(reverse=True) # reverse=True para ordenar de mayor a menor
+    return res
 
+    # También:
+    # return sorted(res, reverse=True)
 
 ### 3.4 Avistamiento de un año con el comentario más largo
 def comentario_mas_largo(avistamientos:list[Avistamiento], anyo:int, palabra:str)->Avistamiento:
@@ -198,7 +212,11 @@ def comentario_mas_largo(avistamientos:list[Avistamiento], anyo:int, palabra:str
     :param palabra: palabra que debe incluir el comentario del avistamiento buscado 
     :return: avistamiento con el comentario más largo
     '''    
-    # TODO: Para el próximo miércoles, resolver en casa
+    filtrado = []
+    for av in avistamientos:
+        if av.fechahora.year == anyo and palabra in av.comentarios:
+            filtrado.append(av)
+    return max(filtrado, key = lambda av: len(av.comentarios))
     
 
 ### 3.5 Media de días entre avistamientos consecutivos
@@ -212,7 +230,31 @@ def media_dias_entre_avistamientos(avistamientos:list[Avistamiento], anyo:int|No
     :param anyo: año para el que se hará la búsqueda 
     :return: media de días transcurridos entre avistamientos. Si no se puede realizar el cálculo, devuelve None 
     '''    
-    pass
+    #Filtramos por año
+    filtrado = []
+    for av in avistamientos:
+        if anyo == None or av.fechahora.year == anyo:
+            filtrado.append(av)
+
+    # Debe haber al menos dos avistamientos para poder hacer el cálculo que me piden
+    if len(filtrado) <= 1:
+        return None
+
+    # Creamos una copia ordenada. CUIDADO! No ordenamos directamente la recibida,
+    # porque si no estaríamos cambiándole la lista a quien nos la ha pasado
+    ordenados = sorted(filtrado) 
+
+    # avistamientos[1:] devuelve el trozo de avistamientos
+    # que comienza en el segundo elemento (índice 1) y
+    # llega hasta el final
+    suma_dias = 0
+    for av1, av2 in zip(ordenados, ordenados[1:]):
+        dias = (av2.fechahora.date() - av1.fechahora.date()).days
+        suma_dias += dias
+
+    return suma_dias / (len(ordenados)-1)
+
+
 
 
 ## 4 Operaciones con diccionarios
@@ -226,8 +268,33 @@ def avistamientos_por_fecha(avistamientos:list[Avistamiento])->dict[date, list[A
     :return diccionario en el que las claves son las fechas de los avistamientos 
          y los valores son conjuntos con los avistamientos observados en esa fecha
     '''
-    pass
+    res = {} # res = dict()
+    for av in avistamientos:
+        fecha = av.fechahora.date()
+        # Si fecha aún no está en el diccionario (no existe la clave)
+        if fecha not in res:
+            res[fecha] = [av] # Crea una lista con av, y la guarda en el diccionario para la clave fecha
+        else:
+            res[fecha].append(av)
 
+    # Otra forma de escribir lo mismo:
+    res = {} # res = dict()
+    for av in avistamientos:
+        fecha = av.fechahora.date()
+        # Si fecha aún no está en el diccionario (no existe la clave)
+        if fecha not in res:
+            res[fecha] = [] # Crea una lista con av, y la guarda en el diccionario para la clave fecha
+        res[fecha].append(av)
+    return res
+
+### 4.1.2 Formas distintas por año
+def formas_distintas_por_año(avistamientos: list[Avistamiento]) -> dict[int, set[str]]:
+    '''
+    Devuelve un diccionario en el que se agrupan para cada año las formas distintas de los
+    avistamientos de ese año. Las claves del diccionario son años (int) y los valores asociados
+    a cada año son conjuntos de formas (set[str]).
+    '''
+    # TODO: RESOLVER PARA EL MIÉRCOLES 19 DE  NOVIEMBRE
 
 ### 4.2 Formas de avistamientos por mes
 def formas_por_mes(avistamientos:list[Avistamiento])->dict[str, set[str]]:
