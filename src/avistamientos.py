@@ -1,7 +1,11 @@
 import csv
 from datetime import datetime, date
 from typing import NamedTuple
-from coordenadas import Coordenadas, distancia
+from coordenadas import Coordenadas, distancia, redondear
+
+## Definición de constantes
+MESES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
 ## Definición de tipos
 Avistamiento = NamedTuple('Avistamiento', [
@@ -244,6 +248,9 @@ def media_dias_entre_avistamientos(avistamientos:list[Avistamiento], anyo:int|No
     # porque si no estaríamos cambiándole la lista a quien nos la ha pasado
     ordenados = sorted(filtrado) 
 
+    # Alternativa usando un generador:
+    ordenados = sorted(av for av in avistamientos if anyo==None or av.fechahora.year==anyo)
+
     # avistamientos[1:] devuelve el trozo de avistamientos
     # que comienza en el segundo elemento (índice 1) y
     # llega hasta el final
@@ -294,7 +301,13 @@ def formas_distintas_por_año(avistamientos: list[Avistamiento]) -> dict[int, se
     avistamientos de ese año. Las claves del diccionario son años (int) y los valores asociados
     a cada año son conjuntos de formas (set[str]).
     '''
-    # TODO: RESOLVER PARA EL MIÉRCOLES 19 DE  NOVIEMBRE
+    res = {}
+    for av in avistamientos:
+        año = av.fechahora.year
+        if año not in res:
+            res[año] = set()
+        res[año].add(av.forma)
+    return res
 
 ### 4.2 Formas de avistamientos por mes
 def formas_por_mes(avistamientos:list[Avistamiento])->dict[str, set[str]]:
@@ -308,7 +321,24 @@ def formas_por_mes(avistamientos:list[Avistamiento])->dict[str, set[str]]:
     :return: diccionario en el que las claves son los nombres de los meses 
          y los valores son conjuntos con las formas observadas en cada mes
     '''
-    pass
+    
+    res = {}
+    for av in avistamientos:
+        #mes = pasa_mes_a_nombre(av.fechahora.month)
+        mes = MESES[av.fechahora.month - 1]
+        if mes not in res:
+            res[mes] = set()
+        res[mes].add(av.forma)
+    return res
+
+'''
+def pasa_mes_a_nombre(mes: int) -> str:
+    if mes == 1:
+            return "Enero"
+        elif mes == 2:
+            return "Febrero"
+        ...
+'''
 
 ### 4.3 Número de avistamientos por año
 def numero_avistamientos_por_año(avistamientos:list[Avistamiento])->dict[int, int]:
@@ -319,7 +349,13 @@ def numero_avistamientos_por_año(avistamientos:list[Avistamiento])->dict[int, i
     :return: diccionario en el que las claves son los años
          y los valores son el número de avistamientos observados en ese año
     '''
-    pass
+    res = {}
+    for av in avistamientos:
+        año = av.fechahora.year
+        if año not in res:
+            res[año] = 0
+        res[año] += 1
+    return res
 
 ### 4.4 Número de avistamientos por mes del año
 def num_avistamientos_por_mes(avistamientos:list[Avistamiento])->dict[int, int]:
@@ -332,7 +368,13 @@ def num_avistamientos_por_mes(avistamientos:list[Avistamiento])->dict[int, int]:
     :return:diccionario en el que las claves son los nombres de los meses y 
          los valores son el número de avistamientos observados en ese mes
     '''
-    pass
+    res = {}
+    for av in avistamientos:
+        mes = MESES[av.fechahora.month - 1]
+        if mes not in res:
+            res[mes] = 0
+        res[mes] += 1
+    return res
 
 ### 4.5 Coordenadas con mayor número de avistamientos
 def coordenadas_mas_avistamientos(avistamientos:list[Avistamiento])->Coordenadas:
@@ -343,7 +385,24 @@ def coordenadas_mas_avistamientos(avistamientos:list[Avistamiento])->Coordenadas
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :return: Coordenadas (sin decimales) que acumulan más avistamientos
     '''
-    pass
+    # Hay que seguir dos pasos:
+    # 1. Construir un diccionario de recuentos: "Cuantos avistamientos por coordenadas enteras"
+    conteo_por_coordenadas = {}
+    for av in avistamientos:
+        coordenadas = redondear(av.ubicacion)
+        if coordenadas not in conteo_por_coordenadas:
+            conteo_por_coordenadas[coordenadas] = 0
+        conteo_por_coordenadas[coordenadas] += 1
+    # 2.- Buscar la clave (coordenadas enteras) que tienen el mayor valor asociado (recuentos)
+    # Si escribo esto: max(conteo_por_coordenadas.values())
+    # ... me devolvería uno de los conteos (int), pero yo quiero devolver LA CLAVE (Coordenadas)
+    coordenadas, _ = max(conteo_por_coordenadas.items(), key = lambda item:item[1])
+
+    #return max(conteo_por_coordenadas.items(), key = lambda item:item[1])[0]
+    #return max(conteo_por_coordenadas, key = lambda clave:conteo_por_coordenadas[clave])
+    return coordenadas
+
+
 
 ### 4.6 Hora del día con mayor número de avistamientos
 def hora_mas_avistamientos(avistamientos:list[Avistamiento])->int:
@@ -354,7 +413,21 @@ def hora_mas_avistamientos(avistamientos:list[Avistamiento])->int:
     :return: hora del día en la que se producen más avistamientos
       
     '''
-    pass
+    # Primer paso
+    conteo_por_horas = {}
+    for av in avistamientos:
+        hora = av.fechahora.hour
+        if hora not in conteo_por_horas:
+            conteo_por_horas[hora] = 0
+        conteo_por_horas += 1
+    # Segundo paso
+    #                      devuelve un item (clave, valor)
+    #      =======================================================
+    #                                                             accedo a la clave
+    #                                                              =====
+    return max(conteo_por_horas.items(), key = lambda item:item[1])[0]
+
+    
 
 ### 4.7 Longitud media de los comentarios por estado
 def longitud_media_comentarios_por_estado(avistamientos:list[Avistamiento])->dict[str,float]:
@@ -366,7 +439,21 @@ def longitud_media_comentarios_por_estado(avistamientos:list[Avistamiento])->dic
     :param avistamientos: lista de tuplas con la información de los avistamientos 
     :return: diccionario que almacena la longitud media de los comentarios (valores) por estado (claves)
     '''
-    pass 
+    # 1. Hacer un dicc que agrupe en listas los tamaños de los comentarios por estados
+    # (clave: estados, valores: lista de tamaños de comentarios)
+    aux = {}
+    for av in avistamientos:
+        if av.estado not in aux:
+            aux[av.estado] = []
+        aux[av.estado].append(len(av.comentarios))
+    
+    # 2. Recorrer cada estado y lista anterior, y calcular la media de la lista
+    res = {}
+    for estado, lista_tams_comentarios in aux.items():
+        media = sum(lista_tams_comentarios) / len(lista_tams_comentarios)
+        res[estado] = media
+
+    return res    
 
 ### 4.8 Porcentaje de avistamientos por forma
 def porc_avistamientos_por_forma(avistamientos:list[Avistamiento])->dict[str,float]:  
@@ -378,6 +465,7 @@ def porc_avistamientos_por_forma(avistamientos:list[Avistamiento])->dict[str,flo
     :return:  diccionario que almacena los porcentajes de avistamientos (valores)
          por forma (claves)
     '''  
+    # TODO: Para el miércoles 26 de noviembre
     pass
 
 ### 4.9 Avistamientos de mayor duración por estado
@@ -390,6 +478,7 @@ def avistamientos_mayor_duracion_por_estado(avistamientos:list[Avistamiento], n:
     :param n: número de avistamientos a almacenar por cada estado 
     :return: diccionario en el que las claves son los estados y los valores son listas con los "n" avistamientos de mayor duración de cada estado, ordenados de mayor a menor duración
     '''
+    # TODO: Para el miércoles 26 de noviembre
     pass
 
 ### 4.10 Año con más avistamientos de una forma
