@@ -1,3 +1,4 @@
+from collections import Counter, defaultdict
 import csv
 from datetime import datetime, date
 from typing import NamedTuple
@@ -466,7 +467,14 @@ def porc_avistamientos_por_forma(avistamientos:list[Avistamiento])->dict[str,flo
          por forma (claves)
     '''  
     # TODO: Para el miércoles 26 de noviembre
-    pass
+    conteos = Counter(av.forma for av in avistamientos)
+
+    res = {}
+    total = len(avistamientos)
+    for forma, recuento in conteos.items():
+        res[forma] = recuento*100/total
+    return res
+
 
 ### 4.9 Avistamientos de mayor duración por estado
 def avistamientos_mayor_duracion_por_estado(avistamientos:list[Avistamiento], n:int=3)->dict[str,Avistamiento]:
@@ -478,8 +486,21 @@ def avistamientos_mayor_duracion_por_estado(avistamientos:list[Avistamiento], n:
     :param n: número de avistamientos a almacenar por cada estado 
     :return: diccionario en el que las claves son los estados y los valores son listas con los "n" avistamientos de mayor duración de cada estado, ordenados de mayor a menor duración
     '''
-    # TODO: Para el miércoles 26 de noviembre
-    pass
+    # SI uso defaultdict(list), no tengo que preguntar si existe la
+    # clave, porque en caso de no existir se añadirá automáticamente
+    # un list asociado a esa clave
+    indice_por_estado = defaultdict(list)
+    for av in avistamientos:
+        indice_por_estado[av.estado].append(av)
+
+    res = {}
+    for estado, avs_estado in indice_por_estado.items():
+        # Tengo que quedarme con los n avistamientos más largos
+        # de avs_estado
+        avs_estado.sort(key=lambda av:av.duracion, reverse=True) 
+        res[estado] = avs_estado[:n]
+    
+    return res
 
 ### 4.10 Año con más avistamientos de una forma
 def año_mas_avistamientos_forma(avistamientos:list[Avistamiento], forma:str)->int:
@@ -491,8 +512,12 @@ def año_mas_avistamientos_forma(avistamientos:list[Avistamiento], forma:str)->i
     :param forma: forma del avistamiento 
     :return: año con mayor número de avistamientos de la forma dada
     '''
-    pass
+    conteos = Counter(av.fechahora.year 
+                      for av in avistamientos 
+                      if av.forma==forma)
 
+    return conteos.most_common(1)[0][0]
+in
 
 ### 4.11 Estados con mayor número de avistamientos
 def estados_mas_avistamientos(avistamientos:list[Avistamiento], n:int=5)->list[tuple[str,int]]:
@@ -508,7 +533,7 @@ def estados_mas_avistamientos(avistamientos:list[Avistamiento], n:int=5)->list[t
          junto con el número de avistamientos, en orden decreciente
          del número de avistamientos y con un máximo de "limite" estados.
     '''
-    pass  
+    contador = Counter(av.estado for av in avistamientos)
 
 ### 4.12 Duración total de los avistamientos de cada año en un estado dado
 def duracion_total_avistamientos_año(avistamientos:list[Avistamiento], estado:str)-> dict[int, int]:
@@ -520,7 +545,13 @@ def duracion_total_avistamientos_año(avistamientos:list[Avistamiento], estado:s
     :param estado: nombre del estado
     :return: diccionario en el que las claves son los años y los valores son números con la suma de las duraciones de los avistamientos observados ese año en el estado dado.
     '''
-    pass
+    # Si voy a calcular un diccionario de sumas
+    # lo más cómodo es usar defaultdict(int) o defaultdict(float)
+    res = defaultdict(int)
+    for av in avistamientos:
+        if av.estado == estado:
+            res[av.fechahora.year] += av.duracion
+    return res
 
 ### 4.13 Fecha del avistamiento más reciente de cada estado
 def avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])->dict[str, datetime]:
@@ -532,4 +563,27 @@ def avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])->dict
     :return:  diccionario en el que las claves son los estados y los valores son 
          las fechas del último avistamientos observado en ese estado.
     '''
-    pass
+    indice_por_estado = defaultdict(list)
+    for av in avistamientos:
+        # En las listas del diccionario voy a meter
+        # sólo las fechas, porque es lo único que necesito
+        # luego para buscar la mayor
+        indice_por_estado[av.estado].append(av.fechahora)
+    
+    res = {}
+    for estado, fechas_estado in indice_por_estado.items():
+        res[estado] = max(fechas_estado)
+
+    return res
+
+### EXTRA:
+def ciudad_mayor_duracion_media(avistamientos:list[Avistamiento], 
+                              fecha_ini: date | None = None,
+                              fecha_fin: date | None = None) -> str:
+    '''
+    Devuelve la ciudad con la mayor duración media de avistamientos,
+    considerando sólo los avistamientos entre fecha_ini y fecha_fin.
+    Si fecha_ini o fecha_fin son None, no se tienen en cuenta para el 
+    filtrado.
+    '''
+    # TODO: Para el miércoles 3 de diciembre
