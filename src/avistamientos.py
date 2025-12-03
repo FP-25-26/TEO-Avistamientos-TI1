@@ -586,4 +586,32 @@ def ciudad_mayor_duracion_media(avistamientos:list[Avistamiento],
     Si fecha_ini o fecha_fin son None, no se tienen en cuenta para el 
     filtrado.
     '''
-    # TODO: Para el miércoles 3 de diciembre
+    # 1. Calcular diccionario con listas de duraciones para cada ciudad
+    duraciones_por_ciudad = defaultdict(list)
+    for av in avistamientos:
+        if fecha_ini == None or fecha_ini <= av.fechahora.date():
+            if fecha_fin == None or av.fechahora.date() <= fecha_fin: # fecha_fin >= av....
+                duraciones_por_ciudad[av.ciudad].append(av.duracion)
+    
+    # 2. Calcular las medias de las listas de duraciones
+    medias_duraciones_por_ciudad = {}
+    for ciudad, duraciones in duraciones_por_ciudad.items():
+        medias_duraciones_por_ciudad[ciudad] = sum(duraciones) / len(duraciones)
+    
+    # Por comprensión se haría así:
+    #medias_duraciones_por_ciudad = {ciudad:sum(duraciones)/len(duraciones) 
+    #                                for ciudad, duraciones in duraciones_por_ciudad.items()}
+
+    # 3. Buscar la ciudad que tiene la mayor media de duraciones
+    return max(medias_duraciones_por_ciudad.items(), key = lambda t:t[1])[0]
+    # Se puede hacer pasándole a max solo las claves
+    # return max(medias_duraciones_por_ciudad, key = lambda k:medias_duraciones_por_ciudad[k])   # No se pone [0]
+'''
+Para entender qué hacer max
+def max_ficticio(iterable, key):
+    res = None
+    for elem in iterable: #elem => "ny"
+        if res == None or key(elem) > key(res):
+            res = elem
+    return res
+'''
